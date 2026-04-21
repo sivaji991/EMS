@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "ignoreDeprecations": "6.0",   // silences the warning temporarily
+    "paths": {
+      "baseUrl": ["./src"]               // replaces baseUrl with explicit path mapping
+    }
+  },
+  "include": ["src"]
+}
