@@ -21,12 +21,12 @@ const Employees = () => {
     setTimeout(()=>{
       setLoading(false)
     },1000)
-  },[])
+  },[selectDept])
 
   useEffect(()=>{
     // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchEmployees();
-  },[])
+  },[fetchEmployees])
 
   const filtered = employees.filter((emp)=>`${emp.firstName} ${emp.lastName} ${emp.position}`.toLowerCase().includes(search.toLowerCase()))
 
