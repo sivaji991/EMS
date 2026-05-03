@@ -24,7 +24,7 @@ const AdminDashboard = ({data}) => {
     {
       icon: CalendarIcon,
       value: data.todayAttendence,
-      label: "Today's Attendence",
+      label: "Today's Attendance",
       description: "Checked in today"
     },
     {
