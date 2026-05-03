@@ -25,7 +25,7 @@ const Sidebar = () => {
   }, [pathname])
 
   // eslint-disable-next-line no-constant-binary-expression
-  const role = "" || "EMPLOYEE";
+  const role = "ADMIN" || "EMPLOYEE";
 
   const navItems = [
     {name : "Dashboard", href: "/dashboard", icon: LayoutGridIcon},
