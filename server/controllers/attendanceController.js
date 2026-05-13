@@ -27,7 +27,7 @@ export const clockInOut = async (req, res) =>{
         employeeId: employee._id,
         date: today,
         checkIn: now,
-        status = isLate ? "LATE" : "PRESENT"
+        status : isLate ? "LATE" : "PRESENT"
       })
       return res.json({ success: true, type: "CHECK_IN", data: attendance });
     }else if(!existing.checkOut){
