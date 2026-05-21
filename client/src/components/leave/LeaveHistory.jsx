@@ -1,11 +1,22 @@
 import {useState} from 'react'
 import { format } from 'date-fns'
 import { Loader2Icon, Check, X } from 'lucide-react'
+import api from '../../api/axios.js'
+import toast from 'react-hot-toast'
 
 const LeaveHistory = ({leaves, isAdmin, onUpdate}) => {
   const [processing,setProcessing] = useState(null)
   const handleStatusUpdate = async (id, status) =>{
     setProcessing(id)
+    try {
+      await api.patch(`/leave/${id}`, {status})
+      toast.success("Leave Aproved")
+      onUpdate();
+    } catch (error) {
+      toast.error(error?.response?.data?.error || error?.message)
+    }finally{
+      setProcessing(null);
+    }
   }
   return (
     <div className='card overflow-hidden'>

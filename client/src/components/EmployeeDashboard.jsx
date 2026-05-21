@@ -10,7 +10,7 @@ const EmployeeDashboard = ({data}) => {
   const cards =[ 
     {
       icon: CalendarIcon,
-      value: data.currentMonthAttendence,
+      value: data.currentMonthAttendance,
       title: "Days Present",
       subtitle: "This month"
     },

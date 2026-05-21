@@ -23,7 +23,7 @@ const App = () => {
           <LoginForm role="admin" title="Admin Portal" subtitle="Sign in to manage the organization" />} />
 
         <Route path="/login/employee" element={
-          <LoginForm  role="employee Portal" 
+          <LoginForm  role="employee" 
           title="Employee Portal" subtitle="Sign in to access your account"
            />} />
 
