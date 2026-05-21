@@ -10,24 +10,29 @@ export const login = async(req, res) =>{
   try {
     const  {email, password, role_type} = req.body;
 
+    const normalizedRole = role_type?.toUpperCase();
+
     if(!email || !password){
       return res.status(400).json({error: "Email and password are required"});
     }
 
     const user = await User.findOne({email})
+    console.log("BODY:", req.body);
+    console.log("DB USER:", user);
     if(!user) {
       return res.status(401).json({error: "Invalid credentials"});
     }
 
-    if(role_type === "admin" && user.role !== "ADMIN"){
+    if(normalizedRole === "ADMIN" && user.role !== "ADMIN"){
       return res.status(401).json({error: "Not authorized as admin"})
     }
 
-    if(role_type === "employee" && user.role !== "EMPLOYEE"){
+    if(normalizedRole === "EMPLOYEE" && user.role !== "EMPLOYEE"){
       return res.status(401).json({error: "Not authorized as employee"});
     }
 
     const isValid = await bcrypt.compare(password, user.password)
+    console.log("PASSWORD VALID:", isValid);
 
     if(!isValid){
       return res.status(401).json({error: "Invalid credentials"});

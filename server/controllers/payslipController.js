@@ -19,11 +19,16 @@ export const createPayslip = async (req, res) =>{
       year: Number(year),
       basicSalary:Number(basicSalary),
       allowances:Number(allowances || 0),
+      deductions: Number(deductions || 0),
       netSalary,
     })
 
-    return req.json({success: true, data:payslip})
+    return res.json({success: true, data:payslip})
   } catch (error) {
+    console.error(
+      "CREATE PAYSLIP ERROR:",
+      error
+    );
     return res.status(500).json({error: "Failed"})
   }
 }
@@ -35,7 +40,7 @@ export const getPayslip = async (req, res) =>{
     const session = req.session;
     const isAdmin = session.role === "ADMIN";
     if(isAdmin){
-      const payslips = (await Payslip.find().populate("employeeId")).toSorted({createdAt: -1});
+      const payslips = await Payslip.find().populate("employeeId").sort({createdAt: -1});
       const data = payslips.map((p) =>{
         const obj = p.toObject();
         return {
@@ -48,12 +53,16 @@ export const getPayslip = async (req, res) =>{
       return res.json({ data })
     }else{
       const employee =  await Employee.findOne({userId: session.userId});
-      if(!employee) return res.status(404).json({error: "Not found"});
+      if(!employee) return res.status(404).json({error: "Employee Not found"});
       const payslips = await Payslip.find({employeeId: employee._id}).sort({createdAt: -1});
 
       return res.json({data: payslips})
     }
   } catch (error) {
+     console.error(
+      "GET PAYSLIP ERROR:",
+      error
+    );
     return res.status(500).json({error: "Failed"})
   }
 }
@@ -64,7 +73,7 @@ export const getPayslipById = async (req, res) =>{
   try {
     const payslip = await Payslip.findById(req.params.id).populate("employeeId").lean();
 
-    if(!payslip) return res.status(404).json({error: "Not found"});
+    if(!payslip) return res.status(404).json({error: "Payslip not found"});
 
     const result = { 
       ...payslip,
@@ -73,8 +82,33 @@ export const getPayslipById = async (req, res) =>{
     }
     return res.json(result);
   } catch (error) {
+    console.error(
+        "GET PAYSLIP BY ID ERROR:",
+        error
+      );
     return res.status(500).json({error: "Failed"})
   }
 }
 
+//Delete Payslip
+export const deletePayslip = async(req, res) =>{
+  try {
+    const {id} = req.params;
+    const payslip = await Payslip.findById(id);
+
+    if(!payslip){
+      return res.status(404).json({
+        error:"Payslip not found"
+      })
+    }
+
+    await Payslip.findByIdAndDelete(id);
+    return res.json({ success: true});
+  } catch (error) {
+    console.error("DELETE PAYSLIP ERROR: ", error);
+
+    return res.status(500).json({error: error.message});
+  }
+};
+ 
 
