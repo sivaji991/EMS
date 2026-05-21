@@ -260,27 +260,30 @@ const attendanceReminderCron =
 
   () => {
 
-    // Current IST time
+    // Current UTC time
     const now = new Date();
 
-    // Convert to IST manually
-    const istNow = new Date(
-      now.toLocaleString(
-        "en-US",
-        {
-          timeZone: "Asia/Kolkata"
-        }
-      )
-    );
+    // IST offset in milliseconds
+    const IST_OFFSET =
+      5.5 * 60 * 60 * 1000;
+
+    // Convert UTC -> IST
+    const istTime =
+      new Date(
+        now.getTime() +
+        IST_OFFSET
+      );
 
     // Create IST midnight
     const startUTC = new Date(
-      istNow.getFullYear(),
-      istNow.getMonth(),
-      istNow.getDate(),
-      0,
-      0,
-      0
+      Date.UTC(
+        istTime.getUTCFullYear(),
+        istTime.getUTCMonth(),
+        istTime.getUTCDate(),
+        0,
+        0,
+        0
+      ) - IST_OFFSET
     );
 
     // End of day
@@ -290,13 +293,11 @@ const attendanceReminderCron =
     );
 
     return {
-
       startUTC:
         startUTC.toISOString(),
 
       endUTC:
-        endUTC.toISOString()
-
+        endUTC.toISOString(),
     };
   }
 );
