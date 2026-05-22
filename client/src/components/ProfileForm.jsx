@@ -17,7 +17,7 @@ const ProfileForm = ({initialData, onSuccess}) => {
     const formData = new FormData(e.currentTarget)
 
     try {
-      await api.post("/profile", formData)
+      await api.put("/profile", formData)
       setMessage("Profile updated successfully")
       onSuccess?.()
     } catch (err) {
@@ -28,7 +28,7 @@ const ProfileForm = ({initialData, onSuccess}) => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="card p-5 sm:p6
+    <form onSubmit={handleSubmit} className="card p-5 sm:p-6
      mb-6">
       <h2 className="text-base font-medium text-slate-900 mb-6 pb-4 border-b border-slate-100 flex items-center gap-2">
         <User className="w-5 h-5 text-slate-400" /> 
@@ -43,7 +43,7 @@ const ProfileForm = ({initialData, onSuccess}) => {
       )}
       {message && (
         <div className="bg-emerald-50 text-emerald-700 rounded-xl text-sm border border-emerald-200 mb-6 flex items-start gap-3">
-          <div className="w-1.5 h-1.5 rounded-full bg-emerals-500 mt-1.5 shrink-0" />
+          <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
           {message}
         </div>
       )}
