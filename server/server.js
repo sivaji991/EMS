@@ -29,7 +29,8 @@ app.use(cors({
   origin: [
     "http://localhost:5173",
     "https://sivaji-ems.vercel.app",
-    "https://ems-7svt.onrender.com"
+    "https://ems-7svt.onrender.com",
+    "https://ems-k8gdx34en-sivaji-avulamandas-projects.vercel.app",
   ],
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
