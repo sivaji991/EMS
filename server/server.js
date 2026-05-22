@@ -28,7 +28,8 @@ const PORT = process.env.PORT || 4000;
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://sivaji-ems.vercel.app"
+    "https://sivaji-ems.vercel.app",
+    "https://ems-7svt.onrender.com"
   ],
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
