@@ -411,71 +411,81 @@ const attendanceReminderCron =
 
           async () => {
 
-            await Promise.all(
+            const emailPromises =
+              absentEmployees.map((emp) => {
 
-              absentEmployees.map(
-                (emp) => {
+                return sendEmail({
+                  to: emp.email,
 
-                  return sendEmail({
-                    to: emp.email,
-                    subject:
-                      "Attendance Reminder -- Please Mark Your Attendance",
-                    body: `
-                      <div style="
-                        max-width: 600px;
-                        font-family: Arial, sans-serif;
+                  subject:
+                    "Attendance Reminder -- Please Mark Your Attendance",
+
+                  body: `
+                    <div style="
+                      max-width: 600px;
+                      font-family: Arial, sans-serif;
+                    ">
+
+                      <h2>
+                        Hi ${emp.firstName},
+                      </h2>
+
+                      <p style="font-size: 16px;">
+                        We noticed that you
+                        have not marked your
+                        attendance today.
+                      </p>
+
+                      <p style="font-size: 16px;">
+                        The attendance deadline
+                        was
+                        <strong>
+                          11:30 AM
+                        </strong>.
+                      </p>
+
+                      <p style="font-size: 16px;">
+                        Please check in as soon
+                        as possible or contact
+                        your admin if you are
+                        facing any issue.
+                      </p>
+
+                      <br />
+
+                      <p style="
+                        font-size: 14px;
+                        color: #666;
                       ">
-                        <h2>
-                          Hi ${emp.firstName},
-                        </h2>
-                        <p style="font-size: 16px;">
-                          We noticed that you
-                          have not marked your
-                          attendance today.
-                        </p>
+                        Department:
+                        ${emp.department}
+                      </p>
 
-                        <p style="font-size: 16px;">
-                          The attendance deadline
-                          was
-                          <strong>
-                            11:30 AM
-                          </strong>.
-                        </p>
+                      <br />
 
-                        <p style="font-size: 16px;">
-                          Please check in as soon
-                          as possible or contact
-                          your admin if you are
-                          facing any issue.
-                        </p>
-                        <br />
-                        <p style="
-                          font-size: 14px;
-                          color: #666;
-                        ">
-                          Department:
-                          ${emp.department}
-                        </p>
+                      <p style="font-size: 16px;">
+                        Best Regards,
+                      </p>
 
-                        <br />
+                      <p style="font-size: 16px;">
+                        <strong>
+                          QuickEMS
+                        </strong>
+                      </p>
 
-                        <p style="font-size: 16px;">
-                          Best Regards,
-                        </p>
+                    </div>
+                  `,
+                });
 
-                        <p style="font-size: 16px;">
-                          <strong>
-                            QuickEMS
-                          </strong>
-                        </p>
+              });
 
-                      </div>
-                    `,
-                  });
+            await Promise.all(emailPromises);
 
-                }
-              )
-            );
+            return {
+              emailsSent:
+                absentEmployees.length,
+            };
+
           }
         );
       }
