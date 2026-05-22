@@ -19,7 +19,7 @@ export const getProfile = async (req, res) =>{
     return res.json(employee)
 
   } catch (error) {
-    returnres.status(500).json({error:"Failed to fetch profile"});
+    return res.status(500).json({error:"Failed to fetch profile"});
   }
 }
 
