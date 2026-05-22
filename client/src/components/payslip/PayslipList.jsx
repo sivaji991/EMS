@@ -95,11 +95,27 @@ const PayslipList = ({payslips, isAdmin, onDelete}) => {
 
                             {/* Download */}
 
-                          <button
+                          {/* <button
                             onClick={()=>window.open(`/print/payslips/${id}`)}
                            className='inline-flex items-center px-3 py-1.5 text-xs font-medium rounded text-blue-700 bg-blue-100 hover:bg-blue-200 transition-colors ring-1 ring-blue-600/10'>
                             <Download className='w-3 h-3 mr-1.5 ' />Download
-                          </button>
+                          </button> */}
+                          <button
+  onClick={() => {
+    const payslipId = payslip.id || payslip._id;
+
+    if (!payslipId) {
+      console.error("Payslip ID missing");
+      return;
+    }
+
+    window.open(`/print/payslips/${payslipId}`, "_blank");
+  }}
+  className='inline-flex items-center px-3 py-1.5 text-xs font-medium rounded text-blue-600 bg-blue-50 hover:bg-blue-100 transition-colors ring-1 ring-blue-600/10'
+>
+  <Download className='w-3 h-3 mr-1.5' />
+  Download
+</button>
 
                           {/* Delete */}
                           {isAdmin && (
