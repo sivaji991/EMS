@@ -25,15 +25,33 @@ const PORT = process.env.PORT || 4000;
 
 //Middleware
 // app.use(cors())
+// app.use(cors({
+//   origin: [
+//     "http://localhost:5173",
+//     "https://sivaji-ems.vercel.app",
+//     "https://ems-7svt.onrender.com",
+//     "https://ems-k8gdx34en-sivaji-avulamandas-projects.vercel.app",
+//   ],
+//   credentials: true,
+//   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+//   allowedHeaders: ["Content-Type", "Authorization"]
+// }));
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://sivaji-ems.vercel.app",
-    "https://ems-7svt.onrender.com"
-  ],
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  origin: function(origin, callback){
+
+    if(!origin) return callback(null, true);
+
+    if(
+      origin.includes("localhost") ||
+      origin.includes("vercel.app")
+    ){
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+
+  credentials: true
 }));
 app.use(express.json())
 app.use(multer().none())
