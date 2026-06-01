@@ -101,21 +101,25 @@ const PayslipList = ({payslips, isAdmin, onDelete}) => {
                             <Download className='w-3 h-3 mr-1.5 ' />Download
                           </button> */}
                           <button
-  onClick={() => {
-    const payslipId = payslip.id || payslip._id;
+                            onClick={() => {
+                              const payslipId = payslip.id || payslip._id;
 
-    if (!payslipId) {
-      console.error("Payslip ID missing");
-      return;
-    }
+                              console.log("BUTTON CLICKED");
+                              console.log("PAYSLIP:", payslip);
+                              console.log("PAYSLIP ID:", payslipId);
 
-    window.open(`/print/payslips/${payslipId}`, "_blank");
-  }}
-  className='inline-flex items-center px-3 py-1.5 text-xs font-medium rounded text-blue-600 bg-blue-50 hover:bg-blue-100 transition-colors ring-1 ring-blue-600/10'
->
-  <Download className='w-3 h-3 mr-1.5' />
-  Download
-</button>
+                              if (!payslipId) {
+                                console.error("Payslip ID missing");
+                                return;
+                              }
+
+                              window.open(`/print/payslips/${payslipId}`, "_blank");
+                            }}
+                            className='inline-flex items-center px-3 py-1.5 text-xs font-medium rounded text-blue-600 bg-blue-50 hover:bg-blue-100 transition-colors ring-1 ring-blue-600/10'
+                          >
+                            <Download className='w-3 h-3 mr-1.5' />
+                            Download
+                          </button>
 
                           {/* Delete */}
                           {isAdmin && (
