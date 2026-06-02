@@ -6,28 +6,28 @@ import { Loader2Icon } from 'lucide-react'
 import api from '../api/axios.js'
 import toast from 'react-hot-toast'
 
-const EmployeeForm = ({initialData, onSuccess, onCancel}) => {
+const EmployeeForm = ({ initialData, onSuccess, onCancel }) => {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const isEditMode = !!initialData;
-  const handleSubmit = async (e)=> {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
     const formData = new FormData(e.currentTarget);
-    if(isEditMode){
+    if (isEditMode) {
       const pwd = formData.get("password")
-      if(!pwd) formData.delete("password")
+      if (!pwd) formData.delete("password")
     }
-  try {
-    const url =  isEditMode ? `/employees/${initialData.id}` : "/employees";
-    const method = isEditMode ? "put" : "post";
-    await api[method](url, formData)
-    onSuccess ?onSuccess(): navigate("/employees")
-  } catch (err) {
-    toast.error(err.response?.data?.error || err.message)
-  }finally{
-    setLoading(false);
-  }
+    try {
+      const url = isEditMode ? `/employees/${initialData.id}` : "/employees";
+      const method = isEditMode ? "put" : "post";
+      await api[method](url, formData)
+      onSuccess ? onSuccess() : navigate("/employees")
+    } catch (err) {
+      toast.error(err.response?.data?.error || err.message)
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -41,23 +41,23 @@ const EmployeeForm = ({initialData, onSuccess, onCancel}) => {
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-5 text-sm text-slate-700'>
           <div>
             <label className='block mb-2'>First Name</label>
-            <input name='firstName' required defaultValue={initialData?.firstName}/>
+            <input name='firstName' required defaultValue={initialData?.firstName} />
           </div>
           <div>
             <label className='block mb-2'>Last Name</label>
-            <input name='lastName' required defaultValue={initialData?.lastName}/>
+            <input name='lastName' required defaultValue={initialData?.lastName} />
           </div>
           <div>
             <label className='block mb-2'>Phone Number</label>
-            <input name='phone' required defaultValue={initialData?.phone}/>
+            <input name='phone' required defaultValue={initialData?.phone} />
           </div>
           <div>
             <label className='block mb-2'>Join Date</label>
-            <input type='date' name='joinDate' required defaultValue={initialData?.joinDate ? new Date(initialData.joinDate).toISOString().split("T")[0] : ""}/>
+            <input type='date' name='joinDate' required defaultValue={initialData?.joinDate ? new Date(initialData.joinDate).toISOString().split("T")[0] : ""} />
           </div>
           <div className='sm:col-span-2'>
             <label className='block mb-2'>Bio (Optional)</label>
-            <textarea name='bio' defaultValue={initialData?.bio} rows={3} className='resize-none' placeholder='Brief description...'/>
+            <textarea name='bio' defaultValue={initialData?.bio} rows={3} className='resize-none' placeholder='Brief description...' />
           </div>
         </div>
       </div>
@@ -72,7 +72,7 @@ const EmployeeForm = ({initialData, onSuccess, onCancel}) => {
             <label className='block mb-2'>Department</label>
             <select name="department" defaultValue={initialData?.department || ""}>
               <option value="">Select Department</option>
-              {DEPARTMENTS.map((deptName)=>(
+              {DEPARTMENTS.map((deptName) => (
                 <option key={deptName} value={deptName}>
                   {deptName}
                 </option>
@@ -81,19 +81,19 @@ const EmployeeForm = ({initialData, onSuccess, onCancel}) => {
           </div>
           <div>
             <label className='block mb-2'>Position</label>
-            <input name='position' required defaultValue={initialData?.position}/>
+            <input name='position' required defaultValue={initialData?.position} />
           </div>
           <div>
             <label className='block mb-2'>Basic Salary</label>
-            <input type='number' name='basicSalary' required min="0" step="0.01" defaultValue={initialData?.basicSalary || 0}/>
+            <input type='number' name='basicSalary' required min="0" step="0.01" defaultValue={initialData?.basicSalary || 0} />
           </div>
           <div>
             <label className='block mb-2'>Allowances</label>
-            <input type='number' name='allowances' required min="0" step="0.01" defaultValue={initialData?.allowances || 0}/>
+            <input type='number' name='allowances' required min="0" step="0.01" defaultValue={initialData?.allowances || 0} />
           </div>
           <div>
             <label className='block mb-2'>Deductions</label>
-            <input type='number' name='deductions' required min="0" step="0.01" defaultValue={initialData?.deductions || 0}/>
+            <input type='number' name='deductions' required min="0" step="0.01" defaultValue={initialData?.deductions || 0} />
           </div>
           {isEditMode && (
             <div>
@@ -102,7 +102,7 @@ const EmployeeForm = ({initialData, onSuccess, onCancel}) => {
                 <option value="ACTIVE">Active</option>
                 <option value="INACTIVE">Inactive</option>
               </select>
-          </div>
+            </div>
           )}
         </div>
       </div>
@@ -115,40 +115,40 @@ const EmployeeForm = ({initialData, onSuccess, onCancel}) => {
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-5 text-sm text-slate-700'>
           <div className='sm:col-span-2'>
             <label className='block mb-2'>Work Email</label>
-            <input type='email' name='email' required defaultValue={initialData?.email}/>
+            <input type='email' name='email' required defaultValue={initialData?.email} />
           </div>
           {!isEditMode && (
             <div>
               <label className='block mb-2'>Temporary Password</label>
-              <input type='password' name='password' required/>
-          </div>
+              <input type='password' name='password' required />
+            </div>
           )}
           {isEditMode && (
             <div>
               <label className='block mb-2'>Change Password (Optional)</label>
-              <input type='password' name='password'  placeholder='Leave blank to keep current'/>
-          </div>
+              <input type='password' name='password' placeholder='Leave blank to keep current' />
+            </div>
           )}
           <div>
-              <label className='block mb-2'>System Role</label>
-              <select name="role" defaultValue={initialData?.user?.role || "EMPLOYEE"}>
-                <option value="EMPLOYEE">Employee</option>
-                <option value="ADMIN">Admin</option>
-              </select>
+            <label className='block mb-2'>System Role</label>
+            <select name="role" defaultValue={initialData?.user?.role || "EMPLOYEE"}>
+              <option value="EMPLOYEE">Employee</option>
+              <option value="ADMIN">Admin</option>
+            </select>
           </div>
         </div>
       </div>
 
       {/* buttons */}
       <div className='flex flex-col-reverse sm:flex-row justify-end gap-3 pt-2'>
-          <button type='button' className='btn-secondary'
-              onClick={()=>(onCancel ? onCancel() : navigate(-1))}>
-              Cancel
-          </button>
-          <button type='submit' disabled={loading} className='btn-primary flex items-center justify-center'>
-              {loading && <Loader2Icon className='w-4 h-4 mr-2 animate-spin' />}
-              {isEditMode ? "Update Employee" : "Create Employee"}
-          </button>
+        <button type='button' className='btn-secondary'
+          onClick={() => (onCancel ? onCancel() : navigate(-1))}>
+          Cancel
+        </button>
+        <button type='submit' disabled={loading} className='btn-primary flex items-center justify-center'>
+          {loading && <Loader2Icon className='w-4 h-4 mr-2 animate-spin' />}
+          {isEditMode ? "Update Employee" : "Create Employee"}
+        </button>
       </div>
 
     </form>

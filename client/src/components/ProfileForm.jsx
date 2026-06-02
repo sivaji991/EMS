@@ -1,15 +1,15 @@
-import { useState,useEffect } from "react"
-import { User,Loader2, Save } from "lucide-react"
+import { useState, useEffect } from "react"
+import { User, Loader2, Save } from "lucide-react"
 import api from "../api/axios.js"
 import toast from "react-hot-toast"
 
-const ProfileForm = ({initialData, onSuccess}) => {
+const ProfileForm = ({ initialData, onSuccess }) => {
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
   const [message, setMessage] = useState("")
 
-  const handleSubmit = async (e)=>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true)
     setError("")
@@ -22,7 +22,7 @@ const ProfileForm = ({initialData, onSuccess}) => {
       onSuccess?.()
     } catch (err) {
       setError(err.response?.data?.error || err.message);
-    }finally{
+    } finally {
       setLoading(false)
     }
   }
@@ -31,7 +31,7 @@ const ProfileForm = ({initialData, onSuccess}) => {
     <form onSubmit={handleSubmit} className="card p-5 sm:p-6
      mb-6">
       <h2 className="text-base font-medium text-slate-900 mb-6 pb-4 border-b border-slate-100 flex items-center gap-2">
-        <User className="w-5 h-5 text-slate-400" /> 
+        <User className="w-5 h-5 text-slate-400" />
         Public Profile
       </h2>
 
@@ -42,8 +42,8 @@ const ProfileForm = ({initialData, onSuccess}) => {
         </div>
       )}
       {message && (
-        <div className="bg-emerald-50 text-emerald-700 rounded-xl text-sm border border-emerald-200 mb-6 flex items-start gap-3">
-          <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
+        <div className="bg-slate-50 text-slate-700 rounded-xl text-sm border border-slate-200 mb-6 flex items-start gap-3">
+          <div className="w-1.5 h-1.5 rounded-full bg-slate-500 mt-1.5 shrink-0" />
           {message}
         </div>
       )}
@@ -67,8 +67,8 @@ const ProfileForm = ({initialData, onSuccess}) => {
         <div>
           <label className="block text-sm font-medium text-slate-700 mb-2">Bio</label>
           <textarea disabled={initialData.isDeleted} name="bio" defaultValue={initialData.bio || ""}
-          placeholder="Write a brief bio..."
-          className={`resize-none ${initialData.isDeleted ? "bg-slate-50 text-slate-400 cursor-not-allowed" : ""}`} />
+            placeholder="Write a brief bio..."
+            className={`resize-none ${initialData.isDeleted ? "bg-slate-50 text-slate-400 cursor-not-allowed" : ""}`} />
           <p className="text-xs text-slate-400 mt-1.5">This will be displayed on your profile.</p>
         </div>
         {initialData.isDeleted ? (
@@ -78,11 +78,11 @@ const ProfileForm = ({initialData, onSuccess}) => {
               <p className="text-sm text-rose-500 mt-0.5">You can no longer update your profile</p>
             </div>
           </div>
-        ):(
+        ) : (
           <div className="flex justify-end pt-2">
             <button type="submit" disabled={loading}
               className="btn-primary flex items-center gap-2 justify-center w-full sm:w-auto">
-                {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
               Save Changes
             </button>
           </div>

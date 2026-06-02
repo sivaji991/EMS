@@ -1,21 +1,21 @@
-import {useState, useEffect, useCallback} from 'react'
-import { Plus, X,Loader2 } from 'lucide-react'
+import { useState, useEffect, useCallback } from 'react'
+import { Plus, X, Loader2 } from 'lucide-react'
 import api from '../../api/axios.js'
 import toast from 'react-hot-toast'
 
-const GeneratePayslipForm = ({employees, onSuccess}) => {
+const GeneratePayslipForm = ({ employees, onSuccess }) => {
 
   const [isOpen, setIsOpen] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  if(!isOpen) return (
-    <button onClick={()=>setIsOpen(true)} className='btn-primary flex items-center gap-2'>
+  if (!isOpen) return (
+    <button onClick={() => setIsOpen(true)} className='btn-primary flex items-center gap-2'>
       <Plus className='w-4 h-4' />
       Generate Payslip
     </button>
   )
 
-  const handleSubmit = async (e)=>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true)
     const formData = new FormData(e.currentTarget);
@@ -36,8 +36,8 @@ const GeneratePayslipForm = ({employees, onSuccess}) => {
         <div className='flex justify-between items-center mb-6'>
           <h3 className='text-lg font-bold text-slate-900'>Generate Monthly Payslip</h3>
           <button
-           onClick={()=>setIsOpen(false)} className='text-slate-400 hover:text-slate-600 p-1'>
-              <X size={20} />
+            onClick={() => setIsOpen(false)} className='text-slate-400 hover:text-slate-600 p-1'>
+            <X size={20} />
           </button>
         </div>
         <form onSubmit={handleSubmit} className='space-y-4'>
@@ -47,7 +47,7 @@ const GeneratePayslipForm = ({employees, onSuccess}) => {
               Employee
             </label>
             <select name="employeeId" required>
-              {employees.map((e)=>(
+              {employees.map((e) => (
                 <option key={e._id || e.id} value={e._id || e.id}>
                   {e.firstName} {e.lastName} ({e.position})
                 </option>
@@ -59,61 +59,61 @@ const GeneratePayslipForm = ({employees, onSuccess}) => {
           <div className='grid grid-cols-2 gap-4'>
             <div>
               <label className='block text-sm font-medium text-slate-700 mb-2'>
-              Month
-            </label>
-            <select name="month">
-              {Array.from({length:12}, (_, i)=> i + 1).map((m)=>(
-                <option key={m} value={m}>
-                  {m}
-                </option>
-              ))}
-            </select>
+                Month
+              </label>
+              <select name="month">
+                {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
+                  <option key={m} value={m}>
+                    {m}
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
               <label className='block text-sm font-medium text-slate-700 mb-2'>
-              Year
-            </label>
+                Year
+              </label>
               <input type="number" name='year' defaultValue={new Date().getFullYear()} />
             </div>
           </div>
 
           {/* Basic Salary */}
           <div>
-              <label className='block text-sm font-medium text-slate-700 mb-2'>
+            <label className='block text-sm font-medium text-slate-700 mb-2'>
               Basic Salary
             </label>
-              <input type="number" name='basicSalary' required placeholder='5000' />
+            <input type="number" name='basicSalary' required placeholder='5000' />
           </div>
 
           {/* Allowances & Deductions */}
           <div className='grid grid-cols-2 gap-4'>
-              <div>
-                <label className='block text-sm font-medium text-slate-700 mb-2'>
-                  Allowances
-                </label>
-                <input type="number" name='allowances' defaultValue="0" />
+            <div>
+              <label className='block text-sm font-medium text-slate-700 mb-2'>
+                Allowances
+              </label>
+              <input type="number" name='allowances' defaultValue="0" />
             </div>
-              <div>
-                <label className='block text-sm font-medium text-slate-700 mb-2'>
-                  Deductions
-                </label>
-                <input type="number" name='deductions' defaultValue="0" />
+            <div>
+              <label className='block text-sm font-medium text-slate-700 mb-2'>
+                Deductions
+              </label>
+              <input type="number" name='deductions' defaultValue="0" />
             </div>
           </div>
 
           {/* buttons */}
           <div className='flex justify-end gap-3 pt-2'>
-            <button 
+            <button
               type='button'
-              onClick={()=>setIsOpen(false)}
+              onClick={() => setIsOpen(false)}
               className='btn-secondary'>
               Cancel
             </button>
-            <button 
+            <button
               type='submit'
               disabled={loading}
               className='btn-primary flex items-center'>
-                {loading && <Loader2 className='w-4 h-4 mr-2 animate-spin'/> }
+              {loading && <Loader2 className='w-4 h-4 mr-2 animate-spin' />}
               Generate
             </button>
           </div>
