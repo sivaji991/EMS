@@ -3,23 +3,23 @@ import { PencilIcon, Trash2Icon } from 'lucide-react'
 import api from '../api/axios.js'
 import toast from 'react-hot-toast'
 
-const EmployeeCard = ({employee, onDelete, onEdit}) => {
+const EmployeeCard = ({ employee, onDelete, onEdit }) => {
 
-  const handleDelete = async()=>{
-    if(!confirm("Are you sure you want to delete this employee?")){
+  const handleDelete = async () => {
+    if (!confirm("Are you sure you want to delete this employee?")) {
       return;
     }
-    
+
     try {
       await api.delete(`/employees/${employee.id}`)
       toast.success("Employee deleted successfully");
       onDelete();
     } catch (error) {
       toast.error(
-      error.response?.data?.error || error.message
-    );
+        error.response?.data?.error || error.message
+      );
     }
-    
+
   }
 
   return (
@@ -28,8 +28,8 @@ const EmployeeCard = ({employee, onDelete, onEdit}) => {
       <div className='relative aspect-4/3 w-full overflow-hidden bg-linear-to-br from-slate-100 to-slate-50'>
         <div className='w-full h-full flex items-center justify-center'>
           {/* circle icon */}
-          <div className='w-20 h-20 rounded-full bg-linear-to-br from-indigo-100 to-slate-100 flex items-center justify-center'>
-            <span className='text-2xl font-medium text-indigo-400'>
+          <div className='w-20 h-20 rounded-full bg-linear-to-br from-green-100 to-slate-100 flex items-center justify-center'>
+            <span className='text-2xl font-medium text-green-400'>
               {employee.firstName[0]} {employee.lastName[0]}
             </span>
           </div>
@@ -44,15 +44,15 @@ const EmployeeCard = ({employee, onDelete, onEdit}) => {
       </div>
 
       {!employee.isDeleted && (
-        <div className='absolute inset-0 bg-linear-to-t from-indigo-700/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-6 gap-3'>
-          <button 
-          onClick={()=> onEdit(employee)}
-          className='p-2.5 bg-white/90 backdrop-blur-sm text-slate-700 hover:text-indigo-600 rounded-xl shadow-lg transition-all hover:scale-105'>
+        <div className='absolute inset-0 bg-linear-to-t from-green-700/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-6 gap-3'>
+          <button
+            onClick={() => onEdit(employee)}
+            className='p-2.5 bg-white/90 backdrop-blur-sm text-slate-700 hover:text-green-600 rounded-xl shadow-lg transition-all hover:scale-105'>
             <PencilIcon className='w-4 h-4' />
           </button>
-          <button 
-          onClick={handleDelete}
-          className='p-2.5 bg-white/90 backdrop-blur-sm text-slate-700 hover:text-rose-600 rounded-xl shadow-lg transition-all hover:scale-105 disabled:opacity-50'>
+          <button
+            onClick={handleDelete}
+            className='p-2.5 bg-white/90 backdrop-blur-sm text-slate-700 hover:text-rose-600 rounded-xl shadow-lg transition-all hover:scale-105 disabled:opacity-50'>
             <Trash2Icon className='w-4 h-4' />
           </button>
         </div>

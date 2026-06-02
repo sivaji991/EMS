@@ -3,7 +3,7 @@ import { getDayTypeDisplay } from '../../assets/assets'
 import { format } from 'date-fns'
 import { getWorkingHoursDisplay } from '../../assets/assets'
 
-const AttendanceHistory = ({history}) => {
+const AttendanceHistory = ({ history }) => {
   return (
     <div className='card overflow-hidden'>
       <div className='px-6 py-4 border-b border-slate-100'>
@@ -29,7 +29,7 @@ const AttendanceHistory = ({history}) => {
                 </td>
               </tr>
             ) : (
-              history.map((record)=>{
+              history.map((record) => {
                 const dayType = getDayTypeDisplay(record)
                 return (
                   <tr key={record._id || record.id}>
@@ -50,7 +50,7 @@ const AttendanceHistory = ({history}) => {
                     </td>
 
                     <td className='px-6 py-4'>
-                      {dayType.label !== "-" ? 
+                      {dayType.label !== "-" ?
                         <span className={`badge ${dayType.className}`}> {dayType.label} </span> : "-"}
                     </td>
 

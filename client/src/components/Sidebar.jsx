@@ -3,27 +3,29 @@
 import { useLocation, Link } from "react-router-dom"
 import { dummyProfileData } from "../assets/assets"
 import { useEffect, useState } from "react"
-import { MenuIcon, UserIcon, 
-  XIcon,LayoutGridIcon, 
+import {
+  MenuIcon, UserIcon,
+  XIcon, LayoutGridIcon,
   CalendarIcon, FileTextIcon,
-  DollarSignIcon, SettingsIcon, 
-  ChevronRightIcon, LogOutIcon, Loader2} from "lucide-react";
+  DollarSignIcon, SettingsIcon,
+  ChevronRightIcon, LogOutIcon, Loader2
+} from "lucide-react";
 
-  import { useAuth } from "../context/useAuth";
-  import api from "../api/axios.js";
+import { useAuth } from "../context/useAuth";
+import api from "../api/axios.js";
 
 const Sidebar = () => {
 
-  const {pathname} = useLocation()
+  const { pathname } = useLocation()
   const [userName, setUserName] = useState("")
   const [mobileMenu, setMobileMenu] = useState(false)
 
-  const {user, loading, logout} = useAuth()
+  const { user, loading, logout } = useAuth()
 
   useEffect(() => {
     // setUserName(dummyProfileData.firstName + " " + dummyProfileData.lastName)
-    api.get("/profile").then(({data})=>{
-      if(data.firstName) setUserName(`${data.firstName} ${data.lastName || ""}`.trim())
+    api.get("/profile").then(({ data }) => {
+      if (data.firstName) setUserName(`${data.firstName} ${data.lastName || ""}`.trim())
     })
   }, [])
 
@@ -37,16 +39,16 @@ const Sidebar = () => {
   const role = user?.role;
 
   const navItems = [
-    {name : "Dashboard", href: "/dashboard", icon: LayoutGridIcon},
-    role === "ADMIN" ? 
-    {name : "Employees", href: "/employees", icon: UserIcon} : 
-    {name : "Attendence", href: "/attendence", icon: CalendarIcon},
-    {name : "Leave", href: "/leave", icon: FileTextIcon},
-    {name : "Payslips", href: "/payslips", icon: DollarSignIcon},
-    {name : "Settings", href: "/settings", icon: SettingsIcon},
+    { name: "Dashboard", href: "/dashboard", icon: LayoutGridIcon },
+    role === "ADMIN" ?
+      { name: "Employees", href: "/employees", icon: UserIcon } :
+      { name: "Attendence", href: "/attendence", icon: CalendarIcon },
+    { name: "Leave", href: "/leave", icon: FileTextIcon },
+    { name: "Payslips", href: "/payslips", icon: DollarSignIcon },
+    { name: "Settings", href: "/settings", icon: SettingsIcon },
   ]
 
-  const handleLogout = ()=>{
+  const handleLogout = () => {
     logout()
     window.location.href = '/login'
   }
@@ -54,37 +56,37 @@ const Sidebar = () => {
   const sidebarContent = (
     <>
       {/* Brand header */}
-      <div className="px-5 pt-6 pb-5 border-b border-white/6">
-          <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                  <UserIcon className="text-white size-7" />
-                  <div>
-                    <p className="font-semibold text-[13px] text-white tracking-wide">Employee MS</p>
-                    <p className="text-[11px] text-slate-500 font-medium">Management System</p>
-                </div>
-              </div>
-              {/* Close Button on mobile */}
-              <button 
-              onClick={()=>setMobileMenu(false)}
-              className="lg:hidden text-slate-400 hover:text-white p-1">
-                  <XIcon size={20} />
-              </button>
+      <div className="px-5 pt-6 pb-5 border-b border-emerald/6">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <UserIcon className="text-white size-7" />
+            <div>
+              <p className="font-semibold text-[13px] text-white tracking-wide">Employee MS</p>
+              <p className="text-[11px] text-emerald-500 font-medium">Management System</p>
+            </div>
           </div>
+          {/* Close Button on mobile */}
+          <button
+            onClick={() => setMobileMenu(false)}
+            className="lg:hidden text-emerald-400 hover:text-white p-1">
+            <XIcon size={20} />
+          </button>
+        </div>
       </div>
       {/* User Profile card */}
       {userName && (
-        <div className="mx-3 mt-4 mb-1 p-3 rounded-lg bg-white/3 border border-white/4">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-slate-800 flex items-center justify-center ring-1 ring-white/10 shrink-0">
-                <span className="text-slate-400 text-xs font-semibold">
-                  {userName.charAt(0).toUpperCase()}
-                </span>
-              </div>
-              <div className="min-w-0">
-                <p className="text-[13px] font-medium text-slate-200 truncate">{userName}</p>
-                <p className="text-[11px] text-slate-500 truncate">{role === "ADMIN" ? "Adminstrator" : "Employee"}</p>
-              </div>
+        <div className="mx-3 mt-4 mb-1 p-3 rounded-lg bg-emerald-200 border border-white/4">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg bg-emerald-800 flex items-center justify-center ring-1 ring-emerald/10 shrink-0">
+              <span className="text-slate-900 text-sm font-semibold">
+                {userName.charAt(0).toUpperCase()}
+              </span>
             </div>
+            <div className="min-w-0">
+              <p className="text-[13px] font-medium text-slate-900 truncate">{userName}</p>
+              <p className="text-[11px] text-slate-500 truncate">{role === "ADMIN" ? "Adminstrator" : "Employee"}</p>
+            </div>
+          </div>
         </div>
       )}
 
@@ -99,31 +101,31 @@ const Sidebar = () => {
         {loading ? (
           <div className="px-3 py-3 flex items-center gap-2 text-slate-500">
             <Loader2 className="animate-spin w-4 h-4" />
-            <span className="text-sm" >Loading...</span> 
+            <span className="text-sm" >Loading...</span>
           </div>
-        ) :(
-          navItems.map((item)=>{
-          const isActive = pathname.startsWith(item.href)
-          return (
-            <Link key={item.name} to={item.href} className={`group flex items-center gap-3 px-3 py-2.5 rounded-md text-[13px] font-medium transition-all duration-150 relative ${isActive ? "bg-indigo-500/12 text-indigo-300" : "text-slate-300 hover:text-white hover:bg-white/4"}`}>
-                {isActive && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-0.75 h-5 rounded-r-full bg-indigo-500" />}
-                <item.icon className={`w-4.25 h-4.25 shrink-0 ${isActive ? "text-indigo-300" : "text-slate-400 group-hover:text-slate-300"
-                }`} />
+        ) : (
+          navItems.map((item) => {
+            const isActive = pathname.startsWith(item.href)
+            return (
+              <Link key={item.name} to={item.href} className={`group flex items-center gap-3 px-3 py-2.5 rounded-md text-[13px] font-medium transition-all duration-150 relative ${isActive ? "bg-green-500/12 text-green-300" : "text-slate-300 hover:text-white hover:bg-white/4"}`}>
+                {isActive && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-0.75 h-5 rounded-r-full bg-green-500" />}
+                <item.icon className={`w-4.25 h-4.25 shrink-0 ${isActive ? "text-green-300" : "text-slate-400 group-hover:text-slate-300"
+                  }`} />
                 <span className="flex-1">{item.name}</span>
-                {isActive && <ChevronRightIcon className="w-3.5 h-3.5 text-indigo-500/50" />}
-            </Link>
-          )
-        })
+                {isActive && <ChevronRightIcon className="w-3.5 h-3.5 text-green-500/50" />}
+              </Link>
+            )
+          })
         )}
-        
+
       </div>
 
       {/* Logout */}
 
       <div className="p-3 border-t border-white/6">
-        <button 
-        onClick={handleLogout}
-        className="flex items-center gap-3 w-full px-3 py-2.5 rounded-md text-[13px] font-medium text-slate-400 hover:text-rose-400 hover:bg-rose-500/8 transition-all duration-150">
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-3 w-full px-3 py-2.5 rounded-md text-[13px] font-medium text-slate-900  bg-slate-400 hover:text-rose-700 hover:bg-rose-100/20 transition-all duration-150">
           <LogOutIcon className="w-4.25 h-4.25" />
           <span>
             Log out
@@ -137,26 +139,26 @@ const Sidebar = () => {
   return (
     <>
       {/* Mobile hamburger button */}
-      <button 
-      onClick={()=>setMobileMenu(true)}
-      className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-slate-900 text-white rounded-lg shadow-lg border border-white/10">
+      <button
+        onClick={() => setMobileMenu(true)}
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-emerald-900 text-white rounded-lg shadow-lg border border-white/10">
         <MenuIcon size={20} />
       </button>
-       {/* Mobile Overlay */}
-       {mobileMenu && 
-        <div 
-        className="lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40" 
-        onClick={()=>setMobileMenu(false)}/>
-       }
-       {/* Sidebar - desktop */}
-       <aside  className="hidden lg:flex flex-col h-full w-56 bg-linear-to-b from-slate-900 via-slate-900 to-slate-950 text-white shrink-0 border-r border-white/4">
+      {/* Mobile Overlay */}
+      {mobileMenu &&
+        <div
+          className="lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
+          onClick={() => setMobileMenu(false)} />
+      }
+      {/* Sidebar - desktop */}
+      <aside className="hidden lg:flex flex-col h-full w-56 bg-linear-to-b from-emerald-900 via-emerald-900 to-emerald-950 text-white shrink-0 border-r border-white/4">
         {sidebarContent}
-       </aside>
+      </aside>
 
-       {/* Sidebar - Mobile */}
-       <aside className={`lg:hidden fixed inset-y-0 left-0 w-72 bg-linear-to-b from-slate-900 via-slate-900 to-slate-950 text-white z-50 flex flex-col transform transition-transform duration-300 ${mobileMenu ? "translate-x-0" : "-translate-x-full"}`}>
+      {/* Sidebar - Mobile */}
+      <aside className={`lg:hidden fixed inset-y-0 left-0 w-72 bg-linear-to-b from-emerald-900 via-emerald-900 to-emerald-950 text-white z-50 flex flex-col transform transition-transform duration-300 ${mobileMenu ? "translate-x-0" : "-translate-x-full"}`}>
         {sidebarContent}
-       </aside>
+      </aside>
     </>
   )
 }

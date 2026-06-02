@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react"
+import { useState, useEffect } from "react"
 import { dummyProfileData } from "../assets/assets"
 import Loading from "../components/Loading"
 import { Lock } from "lucide-react"
@@ -10,14 +10,14 @@ import toast from "react-hot-toast"
 
 const Settings = () => {
 
-  const {user} = useAuth();
+  const { user } = useAuth();
 
 
-  const[profile, setProfile] = useState(null)
+  const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(true)
   const [showPasswordModal, setShowPasswordModal] = useState(false)
-  
-  const fetchProfile  = async ()=>{
+
+  const fetchProfile = async () => {
     // setProfile(dummyProfileData)
     // setTimeout(()=>{
     //   setLoading(false)
@@ -25,19 +25,19 @@ const Settings = () => {
     try {
       const res = await api.get("/profile")
       const profile = res.data;
-      if(profile) setProfile(profile)
+      if (profile) setProfile(profile)
     } catch (err) {
       toast.error(err?.response?.data?.error || err?.message)
-    }finally{
+    } finally {
       setLoading(false)
     }
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchProfile()
   }, [user])
 
-  if(loading )return <Loading />
+  if (loading) return <Loading />
 
   return (
     <div className="animate-fade-in">
@@ -59,11 +59,11 @@ const Settings = () => {
             <p className="text-sm text-slate-500">Update your account password</p>
           </div>
         </div>
-        <button onClick={()=>setShowPasswordModal(true)} className="btn-secondary text-sm">
+        <button onClick={() => setShowPasswordModal(true)} className="btn-secondary text-sm">
           Change
         </button>
       </div>
-      <ChangePasswordModal open={showPasswordModal} onClose={()=>setShowPasswordModal(false)} />
+      <ChangePasswordModal open={showPasswordModal} onClose={() => setShowPasswordModal(false)} />
     </div>
   )
 }

@@ -1,13 +1,13 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import { Loader2Icon, LogOutIcon, LogInIcon } from 'lucide-react'
 import api from '../../api/axios.js'
 import toast from 'react-hot-toast'
 
-const CheckInButton = ({todayRecord, onAction}) => {
+const CheckInButton = ({ todayRecord, onAction }) => {
 
   const [loading, setLoading] = useState(false)
 
-  const handleAttendance = async ()=>{
+  const handleAttendance = async () => {
     setLoading(true)
     // setTimeout(()=>{
     //   setLoading(false)
@@ -22,7 +22,7 @@ const CheckInButton = ({todayRecord, onAction}) => {
     setLoading(false);
   }
 
-  if(todayRecord?.checkOut){
+  if (todayRecord?.checkOut) {
     return (
       <div className='flex flex-col items-center justify-center p-8 bg-slate-50 rounded-2xl border border-slate-200'>
         <h1 className='text-lg font-bold text-sky-900'>Work Day Completed</h1>
@@ -35,10 +35,10 @@ const CheckInButton = ({todayRecord, onAction}) => {
 
   return (
     <div className='absolute bottom-4 right-4 flex flex-col z-1'>
-      <button 
+      <button
         onClick={handleAttendance} disabled={loading}
-        className={`w-full max-w-xs flex justify-between items-center gap-8 p-4 rounded-xl bg-linear-to-br text-white ${isCheckedIn ? "from-slate-700 to-slate-900" : "from-indigo-600 to-indigo-700"}`}>
-        {loading ? <Loader2Icon className='size-7 animate-spin' /> : isCheckedIn? <LogOutIcon className='size-7' /> : <LogInIcon className='size-7' />}
+        className={`w-full max-w-xs flex justify-between items-center gap-8 p-4 rounded-xl bg-linear-to-br text-white ${isCheckedIn ? "from-slate-700 to-slate-900" : "from-green-600 to-green-700"}`}>
+        {loading ? <Loader2Icon className='size-7 animate-spin' /> : isCheckedIn ? <LogOutIcon className='size-7' /> : <LogInIcon className='size-7' />}
         <div className='relative flex flex-col items-center text-center'>
           <h2 className='text-lg font-medium mb-1'>
             {loading ? "Processing..." : isCheckedIn ? "Clock Out" : "Clock In"}

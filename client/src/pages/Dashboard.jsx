@@ -17,16 +17,16 @@ const Dashboard = () => {
     // setTimeout(()=>{
     //   setLoading(false)
     // },1000)
-    api.get("/dashboard").then((res)=> setData(res.data)).catch((err)=> toast.error(err.response?.data?.error || err?.message)).finally(()=>setLoading(false))
+    api.get("/dashboard").then((res) => setData(res.data)).catch((err) => toast.error(err.response?.data?.error || err?.message)).finally(() => setLoading(false))
   }, [])
 
-  if(loading) return <Loading />
+  if (loading) return <Loading />
   if (!data) return <p className="text-center text-slate-500 py-12">Failed to load dashboard</p>
 
   if (data.role === "ADMIN") {
-    return <AdminDashboard data={data}/>
-  }else{
-    return <EmployeeDashboard data={data}/>
+    return <AdminDashboard data={data} />
+  } else {
+    return <EmployeeDashboard data={data} />
   }
 }
 
