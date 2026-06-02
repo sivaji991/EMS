@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { User, Loader2, Save } from "lucide-react"
+import { User, Loader2, Save, DeleteIcon, } from "lucide-react"
 import api from "../api/axios.js"
 import toast from "react-hot-toast"
 
@@ -13,7 +13,7 @@ const ProfileForm = ({ initialData, onSuccess }) => {
     e.preventDefault();
     setLoading(true)
     setError("")
-    setMessage("")
+    setMessage("")   
     const formData = new FormData(e.currentTarget)
 
     try {
@@ -26,6 +26,14 @@ const ProfileForm = ({ initialData, onSuccess }) => {
       setLoading(false)
     }
   }
+  const handleRemove = ()=>{
+    setTimeout(()=>{
+      setError(""), 3000
+    })
+    setTimeout(()=>{
+      setMessage(""), 3000
+    })
+  }
 
   return (
     <form onSubmit={handleSubmit} className="card p-5 sm:p-6
@@ -36,15 +44,21 @@ const ProfileForm = ({ initialData, onSuccess }) => {
       </h2>
 
       {error && (
-        <div className="bg-rose-50 text-rose-700 p-4 rounded-xl text-sm border border-olive-200 mb-6 flex items-start gap-3">
-          <div className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1.5 shrink-0" />
-          {error}
+        <div className="bg-rose-50 text-rose-700 p-4 rounded-xl text-sm border border-rose-200 mb-6 flex items-start gap-3">
+          <div className="flex gap-2">
+            <div className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1.5 shrink-0" />
+            {error}
+          </div>
+          <DeleteIcon className="w-5 h-5  " onClick={handleRemove} /> 
         </div>
       )}
       {message && (
-        <div className="bg-slate-50 text-slate-700 rounded-xl text-sm border border-slate-200 mb-6 flex items-start gap-3">
-          <div className="w-1.5 h-1.5 rounded-full bg-slate-500 mt-1.5 shrink-0" />
-          {message}
+        <div className="bg-emerald-50 text-emerald-700 rounded-xl text-sm border border-emerald-200 mb-6 flex items-start justify-between gap-3 p-4">
+          <div className="flex gap-2">
+            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
+            {message}
+          </div>
+            <DeleteIcon className="w-5 h-5  " onClick={handleRemove} /> 
         </div>
       )}
 
