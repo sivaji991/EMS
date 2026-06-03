@@ -51,7 +51,11 @@ const LeaveHistory = ({ leaves, isAdmin, onUpdate }) => {
                     )}
 
                     <td>
-                      <span className='badge bg-slate-100 text-slate-600'>{leave.type}</span>
+                      <span
+                        className={`badge bg-orange-100 text-slate-600`}
+                      >
+                        {leave.type}
+                      </span>
                     </td>
 
                     <td className='text-xs text-slate-500'>
@@ -74,13 +78,13 @@ const LeaveHistory = ({ leaves, isAdmin, onUpdate }) => {
                             <button
                               onClick={() => handleStatusUpdate(leave._id || leave.id, "APPROVED")}
                               disabled={!!processing}
-                              className='p-1.5 rounded-md bg-slate-50 text-slate-600 hover:bg-slate-100 transition-colors'>
+                              className='p-1.5 rounded-md bg-emerald-100 text-slate-600 hover:bg-emerald-200 transition-colors'>
                               {processing === (leave._id || leave.id) ? <Loader2Icon className='w-4 h-4 animate-spin' /> : <Check className='w-4 h-4' />}
                             </button>
 
                             <button
                               onClick={() => handleStatusUpdate(leave._id || leave.id, "REJECTED")} disabled={!!processing}
-                              className='p-1.5 rounded-md bg-rose-50 text-rose-600 hover:bg-rose-100 transition-colors'>
+                              className='p-1.5 rounded-md bg-rose-100 text-rose-600 hover:bg-rose-200 transition-colors'>
                               {processing === (leave._id || leave.id) ? <Loader2Icon className='w-4 h-4 animate-spin' /> : <X className='w-4 h-4' />}
                             </button>
                           </div>
