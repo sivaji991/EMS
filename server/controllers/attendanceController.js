@@ -23,7 +23,7 @@ export const clockInOut = async (req, res) => {
     const now = new Date();
 
     if (!existing) {
-      const islate = now.getHours() >= 9 && now.getMinutes() > 0;
+      const islate = now.getHours() >= 10 && now.getMinutes() > 0;
       const attendance = await Attendance.create({
         employeeId: employee._id,
         date: today,
@@ -56,7 +56,7 @@ export const clockInOut = async (req, res) => {
       else dayType = "Short Day";
 
       existing.workingHours = workingHours;
-      existing.dayType;
+      existing.dayType = dayType;
 
       await existing.save();
       return res.json({
