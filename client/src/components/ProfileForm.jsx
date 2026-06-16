@@ -44,7 +44,7 @@ const ProfileForm = ({ initialData, onSuccess }) => {
       </h2>
 
       {error && (
-        <div className="bg-rose-50 text-rose-700 p-4 rounded-xl text-sm border border-rose-200 mb-6 flex items-start gap-3">
+        <div className="bg-rose-50 text-rose-700  rounded-xl text-sm border border-rose-200 mb-6 flex items-start justify-between gap-3 p-4">
           <div className="flex gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1.5 shrink-0" />
             {error}
@@ -58,7 +58,7 @@ const ProfileForm = ({ initialData, onSuccess }) => {
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
             {message}
           </div>
-            <DeleteIcon className="w-5 h-5  " onClick={handleRemove} /> 
+          <DeleteIcon className="w-5 h-5  " onClick={handleRemove} /> 
         </div>
       )}
 
